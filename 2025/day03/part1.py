@@ -22,10 +22,17 @@ def parse_input(input_file_path: str = "input.txt") -> list[list[int]]:
 
 
 def calc_max_joltage(bank: list[int]) -> int:
-    max_exclude_last = max(bank[:-1])
-    max_exclude_last_index = bank.index(max_exclude_last)
-    max_after_first = max(bank[(max_exclude_last_index + 1) :])
-    return max_exclude_last * 10 + max_after_first
+    first_max = 0
+    second_max = 0
+
+    for ind, power in enumerate(bank):
+        if ind != len(bank) - 1 and power > first_max:
+            first_max = power
+            second_max = 0
+        elif power > second_max:
+            second_max = power
+
+    return first_max * 10 + second_max
 
 
 if __name__ == "__main__":
